@@ -918,6 +918,11 @@ micromatch@^4.0.8:
     braces "^3.0.3"
     picomatch "^2.3.1"
 
+mini-draw@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/mini-draw/-/mini-draw-1.0.0.tgz#6d8070439121b984b7cc8116cd5e89f158c577f4"
+  integrity sha512-JdMyzNq7UKDx78G9tnyy5GfoEzxyM7xI2sRnwlNhSYytkykLfTC7eVgFPJOH4zRlKaLHezLnnyWxHQCpuJaL7w==
+
 minimatch@^3.0.5, minimatch@^3.1.1, minimatch@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.1.2.tgz#19cd194bfd3e428f049a70817c038d89ab4be35b"

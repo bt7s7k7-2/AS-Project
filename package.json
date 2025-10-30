@@ -16,7 +16,9 @@
         "dev": "concurrently --raw --kill-others \"vite\" \"tsc --noEmit --watch --incremental --preserveWatchOutput\"",
         "build": "tsc --noEmit --incremental && vite build",
         "serve": "vite preview",
-        "lint": "yarn eslint ./",
-        "get-ucpem": "curl -L https://github.com/bt7s7k7/UCPeM/releases/latest/download/ucpem.js -o node_modules/.bin/ucpem"
+        "lint": "yarn eslint ./"
+    },
+    "dependencies": {
+        "mini-draw": "^1.0.0"
     }
 }

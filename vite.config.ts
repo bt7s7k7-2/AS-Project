@@ -13,6 +13,7 @@ export default defineConfig(() => {
         },
         server: {
             port: +(process.env.PORT ?? 8080),
+            hmr: false,
             /* proxy: {
                 "^/api": { target: process.env.BACKEND_URL, changeOrigin: true },
             } */
