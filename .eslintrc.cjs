@@ -43,6 +43,7 @@ module.exports = {
         "@typescript-eslint/no-empty-object-type": "off",
         "@typescript-eslint/no-require-imports": "off",
         "@typescript-eslint/no-unused-expressions": "off",
+        "@typescript-eslint/no-unsafe-declaration-merging": "off",
     },
     ignorePatterns: [
         "/node_modules",
