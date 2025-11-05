@@ -32,8 +32,8 @@ export class NaiveDispatcher extends Dispatcher<NaiveDispatcherEntity> {
         this._entities.splice(index, 1)
     }
 
-    public override registerSystem(system: System | EventHandler): void {
-        this._systemsAndHandlers.push(system)
+    public override registerSystem(system: new (dispatcher: Dispatcher) => (System | EventHandler)): void {
+        this._systemsAndHandlers.push(new system(this))
         this._systemsAndHandlers.sort((a, b) => a.getPriority() - b.getPriority())
     }
 

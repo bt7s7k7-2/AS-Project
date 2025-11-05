@@ -17,5 +17,4 @@ export class VelocityMovementSystem extends System<[typeof Position, typeof Velo
             position.translate(velocity.value.mul(deltaTime))
         }
     }
-
 }

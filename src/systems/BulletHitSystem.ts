@@ -2,7 +2,6 @@ import { CollisionEvent } from "../components/CollisionEvent"
 import { Force } from "../components/Force"
 import { Health } from "../components/Health"
 import { IsBullet } from "../components/IsBullet"
-import { Dispatcher } from "../ecs/Dispatcher"
 import { Entity } from "../ecs/Entity"
 import { EventHandler } from "../ecs/EventHandler"
 
@@ -40,9 +39,4 @@ export class BulletHitSystem extends EventHandler<typeof CollisionEvent> {
             }
         }
     }
-
-    constructor(
-        protected readonly _dispatcher: Dispatcher,
-    ) { super() }
-
 }

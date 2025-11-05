@@ -4,7 +4,6 @@ import { MaxSpeed } from "../components/MaxSpeed"
 import { Position } from "../components/Position"
 import { Entity } from "../ecs/Entity"
 import { System } from "../ecs/System"
-import { GameView } from "../GameView"
 
 export class PlayerMovementSystem extends System<[typeof Position, typeof MaxSpeed, typeof IsPlayer]> {
     public override getPriority(): number {
@@ -17,11 +16,12 @@ export class PlayerMovementSystem extends System<[typeof Position, typeof MaxSpe
 
     public override update(deltaTime: number, entities: Entity[], components: [Position, MaxSpeed, IsPlayer][]): void {
         let movement = Point.zero
+        const gameView = this._dispatcher.gameView
 
-        if (this._gameView.isPressed("KeyA")) movement = movement.add(-1, 0)
-        if (this._gameView.isPressed("KeyD")) movement = movement.add(1, 0)
-        if (this._gameView.isPressed("KeyW")) movement = movement.add(0, -1)
-        if (this._gameView.isPressed("KeyS")) movement = movement.add(0, 1)
+        if (gameView.isPressed("KeyA")) movement = movement.add(-1, 0)
+        if (gameView.isPressed("KeyD")) movement = movement.add(1, 0)
+        if (gameView.isPressed("KeyW")) movement = movement.add(0, -1)
+        if (gameView.isPressed("KeyS")) movement = movement.add(0, 1)
 
         movement = movement.normalize().mul(deltaTime)
 
@@ -29,8 +29,4 @@ export class PlayerMovementSystem extends System<[typeof Position, typeof MaxSpe
             position.translate(movement.mul(speed.value))
         }
     }
-
-    constructor(
-        protected readonly _gameView: GameView,
-    ) { super() }
 }

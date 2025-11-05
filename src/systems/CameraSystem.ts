@@ -2,7 +2,6 @@ import { IsPlayer } from "../components/IsPlayer"
 import { Position } from "../components/Position"
 import { Entity } from "../ecs/Entity"
 import { System } from "../ecs/System"
-import { GameView } from "../GameView"
 
 export class CameraSystem extends System<[typeof Position, typeof IsPlayer]> {
     public override getPriority(): number {
@@ -14,12 +13,9 @@ export class CameraSystem extends System<[typeof Position, typeof IsPlayer]> {
     }
 
     public override update(deltaTime: number, entities: Entity[], components: [Position, IsPlayer][]): void {
+        const camera = this._dispatcher.gameView.camera
         for (const [position] of components) {
-            this._gameView.camera.offset = position.value.mul(-this._gameView.camera.scale)
+            camera.offset = position.value.mul(-camera.scale)
         }
     }
-
-    constructor(
-        protected readonly _gameView: GameView,
-    ) { super() }
 }

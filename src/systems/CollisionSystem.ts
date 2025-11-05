@@ -3,7 +3,6 @@ import { Collider } from "../components/Collider"
 import { CollisionEvent } from "../components/CollisionEvent"
 import { Position } from "../components/Position"
 import { Size } from "../components/Size"
-import { Dispatcher } from "../ecs/Dispatcher"
 import { Entity } from "../ecs/Entity"
 import { System } from "../ecs/System"
 
@@ -104,8 +103,4 @@ export class CollisionSystem extends System<[typeof Position, typeof Size, typeo
             }
         }
     }
-
-    constructor(
-        protected readonly _dispatcher: Dispatcher,
-    ) { super() }
 }

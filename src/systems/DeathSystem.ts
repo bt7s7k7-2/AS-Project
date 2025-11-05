@@ -1,5 +1,4 @@
 import { Health } from "../components/Health"
-import { Dispatcher } from "../ecs/Dispatcher"
 import { Entity } from "../ecs/Entity"
 import { System } from "../ecs/System"
 
@@ -21,8 +20,4 @@ export class DeathSystem extends System<[typeof Health]> {
             }
         }
     }
-
-    constructor(
-        protected readonly _dispatcher: Dispatcher,
-    ) { super() }
 }

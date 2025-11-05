@@ -9,10 +9,8 @@ import { RenderColor } from "../components/RenderColor"
 import { ShootingCooldown } from "../components/ShootingCooldown"
 import { Size } from "../components/Size"
 import { Velocity } from "../components/Velocity"
-import { Dispatcher } from "../ecs/Dispatcher"
 import { Entity } from "../ecs/Entity"
 import { System } from "../ecs/System"
-import { GameView } from "../GameView"
 
 export class PlayerShootingSystem extends System<[typeof Position, typeof ShootingCooldown, typeof AttackDamage, typeof IsPlayer]> {
     public getPriority(): number {
@@ -24,8 +22,9 @@ export class PlayerShootingSystem extends System<[typeof Position, typeof Shooti
     }
 
     public update(deltaTime: number, entities: Entity[], components: [Position, ShootingCooldown, AttackDamage, IsPlayer][]): void {
-        if (!this._gameView.mousePressed) return
-        const target = this._gameView.camera.screenToWorld.transform(this._gameView.mousePosition)
+        const { camera, mousePosition, mousePressed } = this._dispatcher.gameView
+        if (!mousePressed) return
+        const target = camera.screenToWorld.transform(mousePosition)
 
         for (const [position, shootingCooldown, attackDamage] of components) {
             if (shootingCooldown.cooldown > 0) {
@@ -46,9 +45,4 @@ export class PlayerShootingSystem extends System<[typeof Position, typeof Shooti
             shootingCooldown.cooldown = shootingCooldown.maxCooldown
         }
     }
-
-    constructor(
-        protected readonly _gameView: GameView,
-        protected readonly _dispatcher: Dispatcher,
-    ) { super() }
 }

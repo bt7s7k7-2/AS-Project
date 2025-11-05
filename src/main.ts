@@ -24,7 +24,7 @@ import { RenderSystem } from "./systems/RenderSystem"
 import { VelocityMovementSystem } from "./systems/VelocityMovementSystem"
 
 const gameView = new GameView()
-const dispatcher: Dispatcher = new NaiveDispatcher()
+const dispatcher: Dispatcher = new NaiveDispatcher(gameView)
 
 dispatcher.createEntity([
     new Position(Point.zero),
@@ -64,15 +64,15 @@ dispatcher.createEntity([
     new Collider("static"),
 ])
 
-dispatcher.registerSystem(new BulletHitSystem(dispatcher))
-dispatcher.registerSystem(new CameraSystem(gameView))
-dispatcher.registerSystem(new CollisionSystem(dispatcher))
-dispatcher.registerSystem(new DeathSystem(dispatcher))
-dispatcher.registerSystem(new HealthBarRenderSystem(gameView))
-dispatcher.registerSystem(new PlayerMovementSystem(gameView))
-dispatcher.registerSystem(new PlayerShootingSystem(gameView, dispatcher))
-dispatcher.registerSystem(new RenderSystem(gameView))
-dispatcher.registerSystem(new VelocityMovementSystem())
+dispatcher.registerSystem(BulletHitSystem)
+dispatcher.registerSystem(CameraSystem)
+dispatcher.registerSystem(CollisionSystem)
+dispatcher.registerSystem(DeathSystem)
+dispatcher.registerSystem(HealthBarRenderSystem)
+dispatcher.registerSystem(PlayerMovementSystem)
+dispatcher.registerSystem(PlayerShootingSystem)
+dispatcher.registerSystem(RenderSystem)
+dispatcher.registerSystem(VelocityMovementSystem)
 
 let lastFrame = performance.now()
 setInterval(() => {
