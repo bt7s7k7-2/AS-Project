@@ -1,9 +1,13 @@
 import { Color, Matrix, Point } from "mini-draw"
+import { AttackDamage } from "./components/AttackDamage"
 import { Collider } from "./components/Collider"
+import { Force, FORCE_NEUTRAL, FORCE_PLAYER } from "./components/Force"
+import { Health } from "./components/Health"
 import { IsPlayer } from "./components/IsPlayer"
 import { MaxSpeed } from "./components/MaxSpeed"
 import { Position } from "./components/Position"
 import { RenderColor } from "./components/RenderColor"
+import { ShootingCooldown } from "./components/ShootingCooldown"
 import { Size } from "./components/Size"
 import { Dispatcher } from "./ecs/Dispatcher"
 import { GameView } from "./GameView"
@@ -12,11 +16,12 @@ import "./style.scss"
 import { BulletHitSystem } from "./systems/BulletHitSystem"
 import { CameraSystem } from "./systems/CameraSystem"
 import { CollisionSystem } from "./systems/CollisionSystem"
+import { DeathSystem } from "./systems/DeathSystem"
+import { HealthBarRenderSystem } from "./systems/HealthBarRenderSystem"
 import { PlayerMovementSystem } from "./systems/PlayerMovementSystem"
 import { PlayerShootingSystem } from "./systems/PlayerShootingSystem"
 import { RenderSystem } from "./systems/RenderSystem"
 import { VelocityMovementSystem } from "./systems/VelocityMovementSystem"
-import { ShootingCooldown } from "./components/ShootingCooldown"
 
 const gameView = new GameView()
 const dispatcher: Dispatcher = new NaiveDispatcher()
@@ -28,7 +33,10 @@ dispatcher.createEntity([
     new IsPlayer(),
     new MaxSpeed(15),
     new ShootingCooldown(0.1),
+    new AttackDamage(1),
     new Collider("dynamic"),
+    new Health(20),
+    new Force(FORCE_PLAYER),
 ])
 
 const arenaSize = 20
@@ -47,11 +55,22 @@ for (const [position, size] of [
     ])
 }
 
+dispatcher.createEntity([
+    new Position(new Point(5, 5)),
+    new Size(Point.one),
+    new RenderColor(Color.orange.mul(0.5)),
+    new Health(5),
+    new Force(FORCE_NEUTRAL),
+    new Collider("static"),
+])
+
 dispatcher.registerSystem(new BulletHitSystem(dispatcher))
 dispatcher.registerSystem(new CameraSystem(gameView))
 dispatcher.registerSystem(new CollisionSystem(dispatcher))
+dispatcher.registerSystem(new DeathSystem(dispatcher))
+dispatcher.registerSystem(new HealthBarRenderSystem(gameView))
 dispatcher.registerSystem(new PlayerMovementSystem(gameView))
-dispatcher.registerSystem(new PlayerShootingSystem(gameView, dispatcher))
+dispatcher.registerSystem(new PlayerShootingSystem(gameView, dispatcher, 1))
 dispatcher.registerSystem(new RenderSystem(gameView))
 dispatcher.registerSystem(new VelocityMovementSystem())
 

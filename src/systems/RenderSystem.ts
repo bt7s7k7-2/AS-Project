@@ -1,4 +1,4 @@
-import { Rect } from "mini-draw"
+import { Matrix, Rect } from "mini-draw"
 import { Position } from "../components/Position"
 import { RenderColor } from "../components/RenderColor"
 import { Size } from "../components/Size"
@@ -24,6 +24,8 @@ export class RenderSystem extends System<[typeof Position, typeof Size, typeof R
                 .setStyle(renderColor.value)
                 .fillRect(Rect.extends(position.value, size.value))
         }
+
+        this._gameView.drawer.overrideTransform(Matrix.identity)
     }
 
     constructor(
