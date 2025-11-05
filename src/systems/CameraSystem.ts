@@ -6,7 +6,7 @@ import { GameView } from "../GameView"
 
 export class CameraSystem extends System<[typeof Position, typeof IsPlayer]> {
     public override getPriority(): number {
-        return 1
+        return 99
     }
 
     public override getRequiredComponents(): [typeof Position, typeof IsPlayer] {

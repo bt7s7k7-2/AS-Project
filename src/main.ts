@@ -1,4 +1,5 @@
 import { Color, Matrix, Point } from "mini-draw"
+import { Collider } from "./components/Collider"
 import { IsPlayer } from "./components/IsPlayer"
 import { Position } from "./components/Position"
 import { RenderColor } from "./components/RenderColor"
@@ -9,6 +10,7 @@ import { GameView } from "./GameView"
 import { NaiveDispatcher } from "./NaiveDispatcher"
 import "./style.scss"
 import { CameraSystem } from "./systems/CameraSystem"
+import { PhysicsSystem } from "./systems/PhysicsSystem"
 import { PlayerInputSystem } from "./systems/PlayerInputSystem"
 import { RenderSystem } from "./systems/RenderSystem"
 
@@ -21,17 +23,20 @@ dispatcher.createEntity([
     new RenderColor(Color.yellow),
     new IsPlayer(),
     new Speed(15),
+    new Collider("dynamic"),
 ])
 
 dispatcher.createEntity([
     new Position(new Point(10, 10)),
     new Size(new Point(5, 5)),
     new RenderColor(Color.red),
+    new Collider("static"),
 ])
 
 dispatcher.registerSystem(new CameraSystem(gameView))
 dispatcher.registerSystem(new PlayerInputSystem(gameView))
 dispatcher.registerSystem(new RenderSystem(gameView))
+dispatcher.registerSystem(new PhysicsSystem())
 
 let lastFrame = performance.now()
 setInterval(() => {
