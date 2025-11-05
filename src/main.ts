@@ -70,7 +70,7 @@ dispatcher.registerSystem(new CollisionSystem(dispatcher))
 dispatcher.registerSystem(new DeathSystem(dispatcher))
 dispatcher.registerSystem(new HealthBarRenderSystem(gameView))
 dispatcher.registerSystem(new PlayerMovementSystem(gameView))
-dispatcher.registerSystem(new PlayerShootingSystem(gameView, dispatcher, 1))
+dispatcher.registerSystem(new PlayerShootingSystem(gameView, dispatcher))
 dispatcher.registerSystem(new RenderSystem(gameView))
 dispatcher.registerSystem(new VelocityMovementSystem())
 

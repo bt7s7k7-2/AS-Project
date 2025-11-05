@@ -14,7 +14,7 @@ export class VelocityMovementSystem extends System<[typeof Position, typeof Velo
 
     public override update(deltaTime: number, entities: Entity[], components: [Position, Velocity][]): void {
         for (const [position, velocity] of components) {
-            position.value = position.value.add(velocity.value.mul(deltaTime))
+            position.translate(velocity.value.mul(deltaTime))
         }
     }
 

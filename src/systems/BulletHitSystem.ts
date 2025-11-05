@@ -27,7 +27,7 @@ export class BulletHitSystem extends EventHandler<typeof CollisionEvent> {
                 const health = this._dispatcher.tryGetComponent(collision.entity, Health)
 
                 if (health) {
-                    health.value -= bullet.damage
+                    health.applyDamage(bullet.damage)
                 }
 
                 this._dispatcher.deleteEntity(entity)

@@ -83,7 +83,7 @@ export class CollisionSystem extends System<[typeof Position, typeof Size, typeo
                 const resolution = _resolveAabbIntersection(body, collider)
                 if (resolution.isZero()) continue
 
-                position.value = position.value.add(resolution)
+                position.translate(resolution)
                 body.translate(resolution)
                 this._dispatcher.emitEvent(entity, new CollisionEvent(entities[j], components[j][2], resolution))
             }

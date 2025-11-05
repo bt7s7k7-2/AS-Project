@@ -26,7 +26,7 @@ export class PlayerMovementSystem extends System<[typeof Position, typeof MaxSpe
         movement = movement.normalize().mul(deltaTime)
 
         for (const [position, speed] of components) {
-            position.value = position.value.add(movement.mul(speed.value))
+            position.translate(movement.mul(speed.value))
         }
     }
 
