@@ -51,7 +51,7 @@ export class BoundingBox {
 
 export class CollisionSystem extends System<[typeof Position, typeof Size, typeof Collider]> {
     public getPriority(): number {
-        return 1
+        return 10
     }
 
     public getRequiredComponents(): [typeof Position, typeof Size, typeof Collider] {

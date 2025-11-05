@@ -1,7 +1,8 @@
 import { Color, Matrix, Point } from "mini-draw"
+import { AIState } from "./components/AIState"
 import { AttackDamage } from "./components/AttackDamage"
 import { Collider } from "./components/Collider"
-import { Force, FORCE_NEUTRAL, FORCE_PLAYER } from "./components/Force"
+import { Force, FORCE_ENEMY, FORCE_NEUTRAL, FORCE_PLAYER } from "./components/Force"
 import { Health } from "./components/Health"
 import { IsPlayer } from "./components/IsPlayer"
 import { MaxSpeed } from "./components/MaxSpeed"
@@ -17,6 +18,9 @@ import { BulletHitSystem } from "./systems/BulletHitSystem"
 import { CameraSystem } from "./systems/CameraSystem"
 import { CollisionSystem } from "./systems/CollisionSystem"
 import { DeathSystem } from "./systems/DeathSystem"
+import { EnemyBehaviourSystem } from "./systems/EnemyBehaviourSystem"
+import { EnemyCollisionReactionSystem } from "./systems/EnemyCollisionReactionSystem"
+import { EnemyShootingSystem } from "./systems/EnemyShootingSystem"
 import { HealthBarRenderSystem } from "./systems/HealthBarRenderSystem"
 import { PlayerMovementSystem } from "./systems/PlayerMovementSystem"
 import { PlayerShootingSystem } from "./systems/PlayerShootingSystem"
@@ -55,6 +59,21 @@ for (const [position, size] of [
     ])
 }
 
+for (let i = 0; i < 5; i++) {
+    dispatcher.createEntity([
+        new Position(new Point(Math.random() * arenaSize - arenaSize * 0.5, Math.random() * arenaSize - arenaSize * 0.5)),
+        new Size(Point.one),
+        new RenderColor(Color.red),
+        new MaxSpeed(7),
+        new Health(5),
+        new Collider("dynamic"),
+        new Force(FORCE_ENEMY),
+        new AIState(),
+        new ShootingCooldown(1),
+        new AttackDamage(1),
+    ])
+}
+
 dispatcher.createEntity([
     new Position(new Point(5, 5)),
     new Size(Point.one),
@@ -67,6 +86,9 @@ dispatcher.createEntity([
 dispatcher.registerSystem(BulletHitSystem)
 dispatcher.registerSystem(CameraSystem)
 dispatcher.registerSystem(CollisionSystem)
+dispatcher.registerSystem(EnemyBehaviourSystem)
+dispatcher.registerSystem(EnemyCollisionReactionSystem)
+dispatcher.registerSystem(EnemyShootingSystem)
 dispatcher.registerSystem(DeathSystem)
 dispatcher.registerSystem(HealthBarRenderSystem)
 dispatcher.registerSystem(PlayerMovementSystem)

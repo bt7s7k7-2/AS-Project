@@ -11,6 +11,7 @@ export abstract class Dispatcher<TEntity extends Entity = Entity> {
     public abstract update(deltaTime: number): void
     public abstract tryGetComponent<T>(entity: TEntity, type: ComponentType<T>): T | null
     public abstract emitEvent(entity: TEntity, event: Component): void
+    public abstract pullEvents<T extends ComponentType>(event: T): readonly [TEntity, InstanceType<T>][]
 
     constructor(
         public readonly gameView: GameView,

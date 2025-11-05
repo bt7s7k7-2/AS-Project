@@ -52,6 +52,11 @@ export class NaiveDispatcher extends Dispatcher<NaiveDispatcherEntity> {
         list.push([entity, event])
     }
 
+    public override pullEvents<T extends ComponentType>(event: T): readonly [NaiveDispatcherEntity, InstanceType<T>][] {
+        // Type casts due to type erased component instances
+        return this._pendingEvents.get(event) as any ?? []
+    }
+
     public override update(deltaTime: number): void {
         for (const system of this._systemsAndHandlers) {
             if (system instanceof EventHandler) {

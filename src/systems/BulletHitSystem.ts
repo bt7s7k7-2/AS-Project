@@ -7,7 +7,7 @@ import { EventHandler } from "../ecs/EventHandler"
 
 export class BulletHitSystem extends EventHandler<typeof CollisionEvent> {
     public override getPriority(): number {
-        return 2
+        return 15
     }
 
     public override getEventType(): typeof CollisionEvent {

@@ -1,6 +1,7 @@
 import { Point } from "mini-draw"
 import { IsPlayer } from "../components/IsPlayer"
 import { MaxSpeed } from "../components/MaxSpeed"
+import { PlayerMovementEvent } from "../components/PlayerMovementEvent"
 import { Position } from "../components/Position"
 import { Entity } from "../ecs/Entity"
 import { System } from "../ecs/System"
@@ -25,8 +26,11 @@ export class PlayerMovementSystem extends System<[typeof Position, typeof MaxSpe
 
         movement = movement.normalize().mul(deltaTime)
 
-        for (const [position, speed] of components) {
+        for (let i = 0; i < components.length; i++) {
+            const [position, speed] = components[i]
+            const entity = entities[i]
             position.translate(movement.mul(speed.value))
+            this._dispatcher.emitEvent(entity, new PlayerMovementEvent(position.value))
         }
     }
 }
