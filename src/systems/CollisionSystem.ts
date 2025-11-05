@@ -1,7 +1,9 @@
 import { Point, Rect } from "mini-draw"
 import { Collider } from "../components/Collider"
+import { CollisionEvent } from "../components/CollisionEvent"
 import { Position } from "../components/Position"
 import { Size } from "../components/Size"
+import { Dispatcher } from "../ecs/Dispatcher"
 import { Entity } from "../ecs/Entity"
 import { System } from "../ecs/System"
 
@@ -48,7 +50,7 @@ export class BoundingBox {
     }
 }
 
-export class PhysicsSystem extends System<[typeof Position, typeof Size, typeof Collider]> {
+export class CollisionSystem extends System<[typeof Position, typeof Size, typeof Collider]> {
     public getPriority(): number {
         return 1
     }
@@ -61,15 +63,18 @@ export class PhysicsSystem extends System<[typeof Position, typeof Size, typeof 
         const boundingBoxes: BoundingBox[] = new Array(components.length)
         const staticColliders: number[] = []
         const dynamicColliders: number[] = []
+        const triggerColliders: number[] = []
 
         for (let i = 0; i < components.length; i++) {
             const [position, size, collider] = components[i]
             boundingBoxes[i] = BoundingBox.fromEntity(position.value, size.value)
             if (collider.kind == "static") staticColliders.push(i)
             if (collider.kind == "dynamic") dynamicColliders.push(i)
+            if (collider.kind == "trigger") triggerColliders.push(i)
         }
 
         for (const i of dynamicColliders) {
+            const entity = entities[i]
             const [position] = components[i]
             const body = boundingBoxes[i]
 
@@ -80,7 +85,27 @@ export class PhysicsSystem extends System<[typeof Position, typeof Size, typeof 
 
                 position.value = position.value.add(resolution)
                 body.translate(resolution)
+                this._dispatcher.emitEvent(entity, new CollisionEvent(entities[j], components[j][2], resolution))
+            }
+        }
+
+        const allCollidersExceptTriggers = [...staticColliders, ...dynamicColliders]
+
+        for (const i of triggerColliders) {
+            const entity = entities[i]
+            const body = boundingBoxes[i]
+
+            for (const j of allCollidersExceptTriggers) {
+                const collider = boundingBoxes[j]
+                const resolution = _resolveAabbIntersection(body, collider)
+                if (resolution.isZero()) continue
+
+                this._dispatcher.emitEvent(entity, new CollisionEvent(entities[j], components[j][2], resolution))
             }
         }
     }
+
+    constructor(
+        protected readonly _dispatcher: Dispatcher,
+    ) { super() }
 }

@@ -1,18 +1,22 @@
 import { Color, Matrix, Point } from "mini-draw"
 import { Collider } from "./components/Collider"
 import { IsPlayer } from "./components/IsPlayer"
+import { MaxSpeed } from "./components/MaxSpeed"
 import { Position } from "./components/Position"
 import { RenderColor } from "./components/RenderColor"
 import { Size } from "./components/Size"
-import { Speed } from "./components/Speed"
 import { Dispatcher } from "./ecs/Dispatcher"
 import { GameView } from "./GameView"
 import { NaiveDispatcher } from "./NaiveDispatcher"
 import "./style.scss"
+import { BulletHitSystem } from "./systems/BulletHitSystem"
 import { CameraSystem } from "./systems/CameraSystem"
-import { PhysicsSystem } from "./systems/PhysicsSystem"
-import { PlayerInputSystem } from "./systems/PlayerInputSystem"
+import { CollisionSystem } from "./systems/CollisionSystem"
+import { PlayerMovementSystem } from "./systems/PlayerMovementSystem"
+import { PlayerShootingSystem } from "./systems/PlayerShootingSystem"
 import { RenderSystem } from "./systems/RenderSystem"
+import { VelocityMovementSystem } from "./systems/VelocityMovementSystem"
+import { ShootingCooldown } from "./components/ShootingCooldown"
 
 const gameView = new GameView()
 const dispatcher: Dispatcher = new NaiveDispatcher()
@@ -22,7 +26,8 @@ dispatcher.createEntity([
     new Size(Point.one),
     new RenderColor(Color.yellow),
     new IsPlayer(),
-    new Speed(15),
+    new MaxSpeed(15),
+    new ShootingCooldown(0.1),
     new Collider("dynamic"),
 ])
 
@@ -42,10 +47,13 @@ for (const [position, size] of [
     ])
 }
 
+dispatcher.registerSystem(new BulletHitSystem(dispatcher))
 dispatcher.registerSystem(new CameraSystem(gameView))
-dispatcher.registerSystem(new PlayerInputSystem(gameView))
+dispatcher.registerSystem(new CollisionSystem(dispatcher))
+dispatcher.registerSystem(new PlayerMovementSystem(gameView))
+dispatcher.registerSystem(new PlayerShootingSystem(gameView, dispatcher))
 dispatcher.registerSystem(new RenderSystem(gameView))
-dispatcher.registerSystem(new PhysicsSystem())
+dispatcher.registerSystem(new VelocityMovementSystem())
 
 let lastFrame = performance.now()
 setInterval(() => {

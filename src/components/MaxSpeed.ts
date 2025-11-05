@@ -1,7 +1,7 @@
 import { Component } from "../ecs/Component"
 
-export class Speed extends Component {
-    public static override readonly type = "speed"
+export class MaxSpeed extends Component {
+    public static override readonly type = "maxSpeed"
 
     constructor(
         public value: number,
