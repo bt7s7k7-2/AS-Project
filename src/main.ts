@@ -26,12 +26,21 @@ dispatcher.createEntity([
     new Collider("dynamic"),
 ])
 
-dispatcher.createEntity([
-    new Position(new Point(10, 10)),
-    new Size(new Point(5, 5)),
-    new RenderColor(Color.red),
-    new Collider("static"),
-])
+const arenaSize = 20
+const wallThickness = 1
+for (const [position, size] of [
+    [new Point(0, arenaSize * 0.5), new Point(arenaSize, wallThickness)],
+    [new Point(0, -arenaSize * 0.5), new Point(arenaSize, wallThickness)],
+    [new Point(arenaSize * 0.5, 0), new Point(wallThickness, arenaSize)],
+    [new Point(-arenaSize * 0.5, 0), new Point(wallThickness, arenaSize)],
+]) {
+    dispatcher.createEntity([
+        new Position(position),
+        new Size(size),
+        new RenderColor(Color.white.mul(0.3).lerp(Color.magenta, 0.02)),
+        new Collider("static"),
+    ])
+}
 
 dispatcher.registerSystem(new CameraSystem(gameView))
 dispatcher.registerSystem(new PlayerInputSystem(gameView))
