@@ -1,0 +1,54 @@
+@article{10.1145.3592427,
+    author = {Shacklett, Brennan and Rosenzweig, Luc Guy and Xie, Zhiqiang and Sarkar, Bidipta and Szot, Andrew and Wijmans, Erik and Koltun, Vladlen and Batra, Dhruv and Fatahalian, Kayvon},
+    title = {An Extensible, Data-Oriented Architecture for High-Performance, Many-World Simulation},
+    year = {2023},
+    issue_date = {August 2023},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    volume = {42},
+    number = {4},
+    issn = {0730-0301},
+    url = {https://doi.org/10.1145/3592427},
+    doi = {10.1145/3592427},
+    abstract = {Training AI agents to perform complex tasks in simulated worlds requires millions to billions of steps of experience. To achieve high performance, today's fastest simulators for training AI agents adopt the idea of batch simulation: using a single simulation engine to simultaneously step many environments in parallel. We introduce a framework for productively authoring novel training environments (including custom logic for environment generation, environment time stepping, and generating agent observations and rewards) that execute as high-performance, GPU-accelerated batched simulators. Our key observation is that the entity-component-system (ECS) design pattern, popular for expressing CPU-side game logic today, is also well-suited for providing the structure needed for high-performance batched simulators. We contribute the first fully-GPU accelerated ECS implementation that natively supports batch environment simulation. We demonstrate how ECS abstractions impose structure on a training environment's logic and state that allows the system to efficiently manage state, amortize work, and identify GPU-friendly coherent parallel computations within and across different environments. We implement several learning environments in this framework, and demonstrate GPU speedups of two to three orders of magnitude over open source CPU baselines and 5-33\texttimes{} over strong baselines running on a 32-thread CPU. An implementation of the OpenAI hide and seek 3D environment written in our framework, which performs rigid body physics and ray tracing in each simulator step, achieves over 1.9 million environment steps per second on a single GPU.},
+    journal = {ACM Trans. Graph.},
+    month = jul,
+    articleno = {90},
+    numpages = {13},
+    keywords = {game AI, reinforcement learning}
+}
+
+@article{10.1145.3763050,
+    author = {Redmond, Patrick and Castello, Jonathan and Calder\'{o}n Trilla, Jos\'{e} Manuel and Kuper, Lindsey},
+    title = {Exploring the Theory and Practice of Concurrency in the Entity-Component-System Pattern},
+    year = {2025},
+    issue_date = {October 2025},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    volume = {9},
+    number = {OOPSLA2},
+    url = {https://doi.org/10.1145/3763050},
+    doi = {10.1145/3763050},
+    abstract = {The Entity-Component-System (ECS) software design pattern, long used in game development, encourages a clean separation of identity (entities), data properties (components), and computational behaviors (systems). Programs written using the ECS pattern are naturally concurrent, and the pattern offers modularity, flexibility, and performance benefits that have led to a proliferation of ECS frameworks. Nevertheless, the ECS pattern is little-known and not well understood outside of a few domains. Existing explanations of the ECS pattern tend to be mired in the concrete details of particular ECS frameworks, or they explain the pattern in terms of imperfect metaphors or in terms of what it is not. We seek a rigorous understanding of the ECS pattern via the design of a formal model, Core ECS, that abstracts away the details of specific implementations to reveal the essence of software using the ECS pattern. We identify a class of Core ECS programs that behave deterministically regardless of scheduling, enabling use of the ECS pattern as a deterministic-by-construction concurrent programming model. With Core ECS as a point of comparison, we then survey several real-world ECS frameworks and find that they all leave opportunities for deterministic concurrency unexploited. Our findings point out a space for new ECS implementation techniques that better leverage such opportunities.},
+    journal = {Proc. ACM Program. Lang.},
+    month = oct,
+    articleno = {272},
+    numpages = {28},
+    keywords = {ECS}
+}
+
+@misc{bilas,
+    title = {A Data-Driven Game Object System},
+    url = {https://www.gamedevs.org/uploads/data-driven-game-object-system.pdf},
+    year = 2002,
+    author = {Scott Bilas}
+}
+
+@misc{martin,
+    title= {Entity Systems are the future of MMOG development},
+    url = {https://web.archive.org/web/20250531113805/https://t-machine.org/index.php/2007/09/03/entity-systems-are-the-future-of-mmog-development-part-1/},
+    year = 2017,
+    month = sep,
+    day = 3,
+    author = {Adam Martin}
+}
