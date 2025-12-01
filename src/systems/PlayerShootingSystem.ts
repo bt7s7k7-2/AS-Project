@@ -31,7 +31,7 @@ export class PlayerShootingSystem extends System<[typeof Position, typeof Shooti
             const vector = target.sub(position.value).normalize()
 
             this._dispatcher.createEntity(
-                makeBullet(position.value, vector.mul(25), Color.cyan, FORCE_PLAYER, attackDamage.value),
+                makeBullet(position.value, vector.mul(50), Color.cyan, FORCE_PLAYER, attackDamage.value),
             )
 
             shootingCooldown.cooldown = shootingCooldown.maxCooldown

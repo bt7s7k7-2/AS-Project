@@ -12,7 +12,7 @@ import { ShootingCooldown } from "./components/ShootingCooldown"
 import { Size } from "./components/Size"
 import { Dispatcher } from "./ecs/Dispatcher"
 import { GameView } from "./GameView"
-import { NaiveDispatcher } from "./NaiveDispatcher"
+import { PreFilteredDispatcher } from "./PreFilteredDispatcher"
 import "./style.scss"
 import { BulletHitSystem } from "./systems/BulletHitSystem"
 import { CameraSystem } from "./systems/CameraSystem"
@@ -28,7 +28,20 @@ import { RenderSystem } from "./systems/RenderSystem"
 import { VelocityMovementSystem } from "./systems/VelocityMovementSystem"
 
 const gameView = new GameView()
-const dispatcher: Dispatcher = new NaiveDispatcher(gameView)
+const dispatcher: Dispatcher = new PreFilteredDispatcher(gameView)
+
+dispatcher.registerSystem(BulletHitSystem)
+dispatcher.registerSystem(CameraSystem)
+dispatcher.registerSystem(CollisionSystem)
+dispatcher.registerSystem(EnemyBehaviourSystem)
+dispatcher.registerSystem(EnemyCollisionReactionSystem)
+dispatcher.registerSystem(EnemyShootingSystem)
+dispatcher.registerSystem(DeathSystem)
+dispatcher.registerSystem(HealthBarRenderSystem)
+dispatcher.registerSystem(PlayerMovementSystem)
+dispatcher.registerSystem(PlayerShootingSystem)
+dispatcher.registerSystem(RenderSystem)
+dispatcher.registerSystem(VelocityMovementSystem)
 
 dispatcher.createEntity([
     new Position(Point.zero),
@@ -82,19 +95,6 @@ dispatcher.createEntity([
     new Force(FORCE_NEUTRAL),
     new Collider("static"),
 ])
-
-dispatcher.registerSystem(BulletHitSystem)
-dispatcher.registerSystem(CameraSystem)
-dispatcher.registerSystem(CollisionSystem)
-dispatcher.registerSystem(EnemyBehaviourSystem)
-dispatcher.registerSystem(EnemyCollisionReactionSystem)
-dispatcher.registerSystem(EnemyShootingSystem)
-dispatcher.registerSystem(DeathSystem)
-dispatcher.registerSystem(HealthBarRenderSystem)
-dispatcher.registerSystem(PlayerMovementSystem)
-dispatcher.registerSystem(PlayerShootingSystem)
-dispatcher.registerSystem(RenderSystem)
-dispatcher.registerSystem(VelocityMovementSystem)
 
 let lastFrame = performance.now()
 setInterval(() => {
