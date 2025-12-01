@@ -1,3 +1,4 @@
+import { EntityDiedEvent } from "../components/EntityDestroyedEvent"
 import { Health } from "../components/Health"
 import { Entity } from "../ecs/Entity"
 import { System } from "../ecs/System"
@@ -16,6 +17,7 @@ export class DeathSystem extends System<[typeof Health]> {
             const [health] = components[i]
 
             if (health.value <= 0) {
+                this._dispatcher.emitEvent(entities[i], new EntityDiedEvent())
                 this._dispatcher.deleteEntity(entities[i])
             }
         }

@@ -1,7 +1,69 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
 canvas {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+}
+
+@keyframes wave-announcement-animation {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    // Fade in and move down to final position
+    10% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    // Hold position and full opacity
+    50% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    // Begin fade out
+    85% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    // Finish fade out
+    100% {
+        opacity: 0;
+        transform: translateY(0);
+    }
+}
+
+.as-announcement {
+    animation-name: wave-announcement-animation;
+    animation-duration: 4s;
+    animation-timing-function: ease-in-out;
+
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 50px;
+    color: white;
+    text-shadow: 0 0 10px black;
+    position: absolute;
+    opacity: 0;
+    font-weight: bold;
+}
+
+.as-announcement-container {
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 25vh;
+    z-index: 10;
 }
