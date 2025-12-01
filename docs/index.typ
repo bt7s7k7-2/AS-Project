@@ -23,9 +23,11 @@
   date: datify.custom-date-format(datetime.today(), lang: "sk", pattern: "long"),
 )
 
+/*
 // Gap between top-level entries
 #show outline.entry.where(level: 1): set block(above: 1.2em)
 #outline()
+*/
 
 #include "doc.typ"
 

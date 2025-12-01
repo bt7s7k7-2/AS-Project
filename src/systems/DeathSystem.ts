@@ -1,4 +1,4 @@
-import { EntityDiedEvent } from "../components/EntityDestroyedEvent"
+import { EntityDiedEvent } from "../components/EntityDiedEvent"
 import { Health } from "../components/Health"
 import { Entity } from "../ecs/Entity"
 import { System } from "../ecs/System"
