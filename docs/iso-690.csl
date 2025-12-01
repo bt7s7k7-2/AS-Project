@@ -58,7 +58,7 @@
   </macro>
   <macro name="responsability">
     <names variable="author">
-      <name and="text" name-as-sort-order="all" sort-separator=", " delimiter=", " delimiter-precedes-last="never" initialize-with=". ">
+      <name and="text" name-as-sort-order="all" sort-separator=", " delimiter=", " delimiter-precedes-last="never" initialize-with=". " et-al-min="4" et-al-use-first="1">
         <name-part name="family" text-case="uppercase"/>
       </name>
       <substitute>
@@ -107,12 +107,11 @@
     <choose>
       <if variable="issued">
         <date variable="issued">
+          <date-part name="day" suffix=" "/>
+          <date-part name="month" suffix=" "/>
           <date-part name="year" form="long"/>
         </date>
       </if>
-      <else>
-        <text term="no date"/>
-      </else>
     </choose>
   </macro>
   <macro name="title">
@@ -260,7 +259,7 @@
     <choose>
       <if variable="URL">
         <group prefix=" [" suffix="]">
-          <text term="accessed" text-case="capitalize-first"/>
+          <text term="accessed" text-case="capitalize-first" suffix="."/>
           <date variable="accessed">
             <date-part name="day" prefix=" "/>
             <date-part name="month" prefix=" "/>
@@ -293,21 +292,17 @@
     <text variable="ISBN" prefix="ISBN "/>
   </macro>
   <macro name="doi">
-    <text variable="DOI" prefix="DOI "/>
+    <text variable="DOI" prefix="DOI " />
   </macro>
   <macro name="url">
     <choose>
-      <if variable="DOI" match="none">
-        <choose>
-          <if variable="URL">
-            <group>
-              <text value="Dostupné" suffix=" " />
-              <text term="from" suffix=": "/>
-              <text variable="URL"/>
-            </group>
-          </if>
-        </choose>
-      </if>
+        <if variable="URL">
+        <group>
+            <text value="Dostupné" suffix=" " />
+            <text term="from" suffix=": "/>
+            <text variable="URL" />
+        </group>
+        </if>
     </choose>
   </macro>
   <macro name="archive">
@@ -327,7 +322,7 @@
     </choose>
   </macro>
   <citation et-al-min="4" et-al-use-first="1" disambiguate-add-year-suffix="true" disambiguate-add-names="true" disambiguate-add-givenname="true" collapse="year" year-suffix-delimiter=", " after-collapse-delimiter="; ">
-    <layout delimiter="; " prefix="[" suffix="]">
+    <layout delimiter=", " prefix="[" suffix="]">
       <text variable="citation-number"/>
     </layout>
   </citation>
@@ -337,6 +332,7 @@
       <key macro="year-date"/>
     </sort>
     <layout>
+      <text variable="citation-number" prefix="[" suffix="] " />
       <choose>
         <if type="book map" match="any">
           <text macro="responsability" suffix=". "/>
