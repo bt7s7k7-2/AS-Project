@@ -17,12 +17,12 @@ export class PlayerMovementSystem extends System<[typeof Position, typeof MaxSpe
 
     public override update(deltaTime: number, entities: Entity[], components: [Position, MaxSpeed, IsPlayer][]): void {
         let movement = Point.zero
-        const gameView = this._dispatcher.gameView
+        const game = this._dispatcher.game
 
-        if (gameView.isPressed("KeyA")) movement = movement.add(-1, 0)
-        if (gameView.isPressed("KeyD")) movement = movement.add(1, 0)
-        if (gameView.isPressed("KeyW")) movement = movement.add(0, -1)
-        if (gameView.isPressed("KeyS")) movement = movement.add(0, 1)
+        if (game.isPressed("KeyA")) movement = movement.add(-1, 0)
+        if (game.isPressed("KeyD")) movement = movement.add(1, 0)
+        if (game.isPressed("KeyW")) movement = movement.add(0, -1)
+        if (game.isPressed("KeyS")) movement = movement.add(0, 1)
 
         movement = movement.normalize().mul(deltaTime)
 

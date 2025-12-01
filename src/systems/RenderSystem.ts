@@ -15,7 +15,7 @@ export class RenderSystem extends System<[typeof Position, typeof Size, typeof R
     }
 
     public override update(deltaTime: number, entities: Entity[], components: [Position, Size, RenderColor][]): void {
-        const { camera, drawer } = this._dispatcher.gameView
+        const { camera, drawer } = this._dispatcher.game
 
         camera.updateViewport(drawer)
         camera.overrideTransform(drawer)

@@ -11,7 +11,7 @@ import { RenderColor } from "./components/RenderColor"
 import { ShootingCooldown } from "./components/ShootingCooldown"
 import { Size } from "./components/Size"
 import { Dispatcher } from "./ecs/Dispatcher"
-import { GameView } from "./GameView"
+import { Game } from "./Game"
 import { PreFilteredDispatcher } from "./PreFilteredDispatcher"
 import "./style.scss"
 import { BulletHitSystem } from "./systems/BulletHitSystem"
@@ -27,8 +27,8 @@ import { PlayerShootingSystem } from "./systems/PlayerShootingSystem"
 import { RenderSystem } from "./systems/RenderSystem"
 import { VelocityMovementSystem } from "./systems/VelocityMovementSystem"
 
-const gameView = new GameView()
-const dispatcher: Dispatcher = new PreFilteredDispatcher(gameView)
+const game = new Game()
+const dispatcher: Dispatcher = new PreFilteredDispatcher(game)
 
 dispatcher.registerSystem(BulletHitSystem)
 dispatcher.registerSystem(CameraSystem)
@@ -102,7 +102,7 @@ setInterval(() => {
     const deltaTime = (now - lastFrame) / 1000
     lastFrame = now
 
-    gameView.drawer
+    game.drawer
         .setNativeSize()
         .overrideTransform(Matrix.identity)
         .setStyle(Color.white.mul(0.5).lerp(Color.green, 0.01))

@@ -1,4 +1,4 @@
-import { GameView } from "../GameView"
+import { Game } from "../Game"
 import { Component, ComponentType } from "./Component"
 import { Entity } from "./Entity"
 import { EventHandler } from "./EventHandler"
@@ -14,7 +14,7 @@ export abstract class Dispatcher<TEntity extends Entity = Entity> {
     public abstract pullEvents<T extends ComponentType>(event: T): readonly [TEntity, InstanceType<T>][]
 
     constructor(
-        public readonly gameView: GameView,
+        public readonly game: Game,
     ) { }
 }
 

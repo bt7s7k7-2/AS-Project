@@ -13,7 +13,7 @@ export class CameraSystem extends System<[typeof Position, typeof IsPlayer]> {
     }
 
     public override update(deltaTime: number, entities: Entity[], components: [Position, IsPlayer][]): void {
-        const camera = this._dispatcher.gameView.camera
+        const camera = this._dispatcher.game.camera
         for (const [position] of components) {
             camera.offset = position.value.mul(-camera.scale)
         }

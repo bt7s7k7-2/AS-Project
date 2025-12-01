@@ -1,6 +1,6 @@
 import { Drawer, Point } from "mini-draw"
 
-export class GameView {
+export class Game {
     public readonly canvas = document.createElement("canvas")
     public readonly drawer = new Drawer(this.canvas.getContext("2d")!)
     public readonly camera = new Drawer.Camera({

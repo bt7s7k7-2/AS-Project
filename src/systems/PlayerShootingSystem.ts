@@ -18,7 +18,7 @@ export class PlayerShootingSystem extends System<[typeof Position, typeof Shooti
     }
 
     public update(deltaTime: number, entities: Entity[], components: [Position, ShootingCooldown, AttackDamage, IsPlayer][]): void {
-        const { camera, mousePosition, mousePressed } = this._dispatcher.gameView
+        const { camera, mousePosition, mousePressed } = this._dispatcher.game
         if (!mousePressed) return
         const target = camera.screenToWorld.transform(mousePosition)
 
